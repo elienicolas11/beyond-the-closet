@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three-stdlib';
-import { DRACOLoader } from 'three-stdlib'; // Pour les modèles compressés
-import { OrbitControls } from 'three-stdlib'; // Importer OrbitControls
 
 @Component({
   selector: 'app-accueil',
@@ -11,64 +9,122 @@ import { OrbitControls } from 'three-stdlib'; // Importer OrbitControls
   styleUrls: ['./accueil.component.css'],
 })
 export class AccueilComponent implements OnInit {
-
   constructor() {}
 
   ngOnInit(): void {
-    this.init3DModel();
+    this.init3DModels();
   }
 
-  init3DModel(): void {
-    // Créez la scène
+  init3DModels(): void {
     const scene = new THREE.Scene();
-
-    scene.background = new THREE.Color(0xcccccc); 
-
-    // Configurez la caméra
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 5;
 
-    // Configurez le rendu
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    renderer.setPixelRatio(window.devicePixelRatio);
 
-    // Ajoutez une lumière
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 5, 5).normalize();
-    scene.add(light);
+    const container = document.getElementById('model-container');
+    if (container) {
+      container.appendChild(renderer.domElement);
+    }
 
-    // Configurez les contrôles OrbitControls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; // Ajoute un effet de fluidité au mouvement
-    controls.dampingFactor = 0.1; // Réglage de la fluidité
-    controls.enableZoom = true; // Permet le zoom avec la molette de la souris
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
 
-    // Chargez le modèle .glb avec DRACOLoader
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 5, 5).normalize();
+    scene.add(directionalLight);
+
+    let model1: THREE.Object3D | null = null;
+    let model2: THREE.Object3D | null = null;
+
     const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('assets/draco/');
-    loader.setDRACOLoader(dracoLoader);
 
+    // State to track rotation
+    let isModel1Rotating = true;
+    let isModel2Rotating = true;
+
+    // Raycaster for click detection
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+
+    // Load the first model
     loader.load(
-      '/base.glb', // Chemin vers le modèle GLB
+      '/black_dress.glb',
       (gltf) => {
-        const model = gltf.scene;
-        scene.add(model); // Ajouter le modèle à la scène
-        animate();
+        model1 = gltf.scene;
+        model1.position.set(-0.5, -3, 0); // Adjust position of the first model
+        model1.scale.set(1.5, 1.5, 1.5);
+        scene.add(model1);
       },
       undefined,
       (error) => {
-        console.error('Erreur lors du chargement du modèle GLB :', error);
+        console.error('Error loading the first model:', error);
       }
     );
 
-    // Fonction pour animer la scène
+    // Load the second model
+    loader.load(
+      '/casual_outfit.glb',
+      (gltf) => {
+        model2 = gltf.scene;
+        model2.position.set(-3.5, -2.2, 0);
+        model2.scale.set(1.5, 1.5, 1.5);
+        scene.add(model2);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading the second model:', error);
+      }
+    );
+
+    // Add event listener for mouse clicks
+    window.addEventListener('click', (event) => {
+      // Convert mouse position to normalized device coordinates (-1 to +1)
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      // Update raycaster with camera and mouse position
+      raycaster.setFromCamera(mouse, camera);
+
+      // Check for intersections with models
+      const intersects = raycaster.intersectObjects([model1!, model2!], true);
+      if (intersects.length > 0) {
+        const clickedObject = intersects[0].object;
+
+        // Toggle rotation state for the clicked model
+        if (model1 && clickedObject.parent === model1) {
+          isModel1Rotating = !isModel1Rotating;
+        }
+        if (model2 && clickedObject.parent === model2) {
+          isModel2Rotating = !isModel2Rotating;
+        }
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
     const animate = () => {
       requestAnimationFrame(animate);
 
-      controls.update(); // Mise à jour des contrôles à chaque frame
+      // Rotate the first model if it's rotating
+      if (model1 && isModel1Rotating) {
+        model1.rotation.y += 0.01;
+      }
+
+      // Rotate the second model if it's rotating
+      if (model2 && isModel2Rotating) {
+        model2.rotation.y -= 0.01;
+      }
+
       renderer.render(scene, camera);
     };
+
+    animate();
   }
 }

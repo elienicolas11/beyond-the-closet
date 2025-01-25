@@ -1,9 +1,28 @@
 body {
     margin: 0;
     overflow: hidden;
+    height: 100vh;
   }
   
-  canvas {
-    display: block;
+  #background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/background.jpg'); /* Path to your PNG image */
+    background-size: cover; /* Ensures the image covers the entire area */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    z-index: 0; /* Lowest layer */
+  }
+  
+  #model-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20vw;
+    height: 20vh;
+    z-index: 1; /* Layer above the background */
   }
   
