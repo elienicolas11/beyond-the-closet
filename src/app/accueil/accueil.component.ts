@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three-stdlib';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-accueil',
   standalone: true,
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css'],
+  imports: [RouterModule], // Import RouterModule here
+
 })
 export class AccueilComponent implements OnInit {
   constructor() {}

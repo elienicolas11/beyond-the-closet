@@ -56,3 +56,19 @@ body {
     margin-left: 35%; 
   }
   
+
+
+  #controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 10;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

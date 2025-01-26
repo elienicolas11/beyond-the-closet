@@ -1,0 +1,10 @@
+<h1>Fitting Room</h1>
+<p>Selected tenue: {{ tenue }}</p>
+
+<!-- You can load a model or apply logic based on tenue -->
+<div *ngIf="tenue === 'tenue-de-soiree'">
+  <p>Loading the Tenue de Soirée...</p>
+</div>
+<div *ngIf="tenue === 'tenue-casual'">
+  <p>Loading the Tenue Casual...</p>
+</div>
