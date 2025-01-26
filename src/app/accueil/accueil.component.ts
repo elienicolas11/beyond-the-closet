@@ -38,6 +38,7 @@ export class AccueilComponent implements OnInit {
 
     let model1: THREE.Object3D | null = null;
     let model2: THREE.Object3D | null = null;
+    let model3: THREE.Object3D | null = null; // New model (closet)
 
     const loader = new GLTFLoader();
 
@@ -79,6 +80,22 @@ export class AccueilComponent implements OnInit {
       }
     );
 
+    // Load the third model (closet)
+    loader.load(
+      '/closet.glb',
+      (gltf) => {
+        model3 = gltf.scene;
+        model3.position.set(1.5, -2, -3); // Adjust position of the closet model
+        model3.scale.set(2, 2, 2); // Scale adjustment for the closet
+        model3.rotation.y = -Math.PI/5.5;
+        scene.add(model3);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading the third model (closet):', error);
+      }
+    );
+
     // Add event listener for mouse clicks
     window.addEventListener('click', (event) => {
       // Convert mouse position to normalized device coordinates (-1 to +1)
@@ -88,7 +105,7 @@ export class AccueilComponent implements OnInit {
       // Update raycaster with camera and mouse position
       raycaster.setFromCamera(mouse, camera);
 
-      // Check for intersections with models
+      // Check for intersections with only the rotating models
       const intersects = raycaster.intersectObjects([model1!, model2!], true);
       if (intersects.length > 0) {
         const clickedObject = intersects[0].object;
@@ -121,6 +138,8 @@ export class AccueilComponent implements OnInit {
       if (model2 && isModel2Rotating) {
         model2.rotation.y -= 0.01;
       }
+
+      // The closet model (model3) does not rotate
 
       renderer.render(scene, camera);
     };
