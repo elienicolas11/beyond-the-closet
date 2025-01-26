@@ -25,4 +25,34 @@ body {
     height: 20vh;
     z-index: 1; /* Layer above the background */
   }
+
+  #title-container {
+    position: absolute;
+    top: 0;
+    left: 25%; 
+    width: 20%;
+    height: 40%;
+  }
+  
+  #title-container h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    color: whitesmoke;
+    text-shadow: 2px 2px 4px #545a7e;
+    line-height: 1.1; /* Adjust spacing between lines */
+  }
+  
+  #title-container h1 span {
+    display: block; /* Places each word on a new line */
+    margin: 0 auto; /* Centers each word */
+    position: relative;
+  }
+  
+  #title-container h1 span:nth-child(2) {
+    margin-left: 25%;
+  }
+
+  #title-container h1 span:last-child {
+    margin-left: 35%; 
+  }
   
