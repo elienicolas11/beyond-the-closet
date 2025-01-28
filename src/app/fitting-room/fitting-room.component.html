@@ -1,10 +1,45 @@
-<h1>Fitting Room</h1>
-<p>Selected tenue: {{ tenue }}</p>
-
-<!-- You can load a model or apply logic based on tenue -->
 <div *ngIf="tenue === 'tenue-de-soiree'">
   <p>Loading the Tenue de Soirée...</p>
 </div>
-<div *ngIf="tenue === 'tenue-casual'">
-  <p>Loading the Tenue Casual...</p>
+
+<div *ngIf="tenue !== 'tenue-de-soiree'">
+  <h1>Salle d'essayage : {{ tenue || 'tenue-casual' }}</h1>
+  <div class="main-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="menu-item" (click)="selectCategory('haut')">
+        <img src="img/haut_icone.png" alt="Haut Icon" class="icon">
+        <span>Haut</span>
+      </div>
+      <div class="menu-item" (click)="selectCategory('bas')">
+        <img src="img/bas_icone.png" alt="Bas Icon" class="icon">
+        <span>Bas</span>
+      </div>
+      <div class="menu-item" (click)="selectCategory('chaussure')">
+        <img src="img/chaussure_icone.png" alt="Chaussure Icon" class="icon">
+        <span>Chaussure</span>
+      </div>
+      <div class="menu-item" (click)="selectCategory('sac')">
+        <img src="img/sac_icone.png" alt="Sac Icon" class="icon">
+        <span>Sac</span>
+      </div>
+    </div>
+    
+
+    <!-- Center Display -->
+    <div class="center-container">
+      <div class="left-item"><img [src]="selectedBottom" alt="Bottom"></div>
+      <div class="center-item"><img [src]="selectedTop" alt="Top"></div>
+      <div class="right-item top-right"><img [src]="selectedShoe" alt="Shoe"></div>
+      <div class="right-item bottom-right"><img [src]="selectedBag" alt="Bag"></div>
+    </div>
+
+    <!-- Image Slide Bar -->
+    <div class="image-slide-bar">
+      <div *ngFor="let item of slideBarItems" class="slide-item" (click)="onSlideBarItemClick(item)">
+        <img [src]="item.image" [alt]="item.label">
+        <span>{{ item.label }}</span>
+      </div>
+    </div>
+  </div>
 </div>
