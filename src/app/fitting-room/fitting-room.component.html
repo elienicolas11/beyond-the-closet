@@ -37,20 +37,38 @@
 
     <div class="main-container">
       <!-- Center Display -->
-      <div class="center-container">
-        <div class="left-item"><img [src]="selectedBottom" alt="Bottom"></div>
-        <div class="center-item"><img [src]="selectedTop" alt="Top"></div>
-        <div class="right-item top-right"><img [src]="selectedShoe" alt="Shoe"></div>
-        <div class="right-item bottom-right"><img [src]="selectedBag" alt="Bag"></div>
+      <div *ngIf="showInitialImages" class="initial-images">
+        <img src="img/haut_icone.png" alt="Top" />
+        <img src="img/bas_icone.png" alt="Bottom" />
+        <img src="img/chaussure_icone.png" alt="Shoe" />
+        <img src="img/sac_icone.png" alt="Bag" />
       </div>
-
-      <!-- Image Slide Bar -->
-      <div class="image-slide-bar">
-        <div *ngFor="let item of slideBarItems" class="slide-item" (click)="onSlideBarItemClick(item)">
-          <img [src]="item.image" [alt]="item.label">
+      
+      <div *ngIf="!showInitialImages" class="center-container">
+        <div class="left-item"><img *ngIf="selectedBottom" [src]="selectedBottom" alt="Bottom" /></div>
+        <div class="center-item"><img *ngIf="selectedTop" [src]="selectedTop" alt="Top"></div>
+        <div class="right-item top-right"><img *ngIf="selectedShoe" [src]="selectedShoe" alt="Shoe"></div>
+        <div class="right-item bottom-right"><img *ngIf="selectedBag" [src]="selectedBag" alt="Bag"></div>
+      </div>
+    
+    <!-- Image Slide Bar -->
+    <div class="image-slide-bar">
+      <div class="slide-container">
+        <div
+          *ngFor="let item of slideBarItems; let i = index"
+          class="slide-item"
+          (click)="onSlideBarItemClick(item, i)"
+        >
+          <!-- Ajouter la classe 'selected' si l'index correspond -->
+          <img
+            [src]="item.image"
+            [alt]="item.label"
+            [class.selected]="selectedIndexes[selectedCategory] === i"
+          />
           <span>{{ item.label }}</span>
         </div>
       </div>
-    </div>
+    </div>        
   </div>
+</div>
 </div>

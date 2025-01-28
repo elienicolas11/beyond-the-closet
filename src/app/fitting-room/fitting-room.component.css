@@ -35,52 +35,46 @@
 }
 
 .icon-buttons .icon {
-    font-size: 1.2rem; /* Adjust the icon size */
-    color: #515779; /* Base color for the icons */
+    font-size: 1.2rem; 
+    color: #515779; 
     cursor: pointer;
-    width: 30px; /* Ensure a consistent circular size */
-    height: 30px; /* Match width for a perfect circle */
-    border: 2px solid #515779; /* Border for the circle */
-    border-radius: 50%; /* Makes the shape circular */
+    width: 30px; 
+    height: 30px; 
+    border: 2px solid #515779; 
+    border-radius: 50%; 
     display: flex;
-    justify-content: center; /* Center the icon inside the circle */
-    align-items: center; /* Center the icon inside the circle */
-    background-color: whitesmoke; /* Background color of the circle */
+    justify-content: center;
+    align-items: center; 
+    background-color: whitesmoke; 
     transition: transform 0.2s ease, color 0.3s ease, background-color 0.3s ease;
 }
 
 .icon-buttons .icon:hover {
-    transform: scale(1.1); /* Slightly enlarge the circle on hover */
-    color: #6b6f91; /* Change icon color on hover */
-    background-color: #f0f0f0; /* Slightly darker background on hover */
-    border-color: #6b6f91; /* Change border color on hover */
+    transform: scale(1.1);
+    color: #6b6f91;
+    background-color: #f0f0f0;
+    border-color: #6b6f91; 
 }
-
 
 .sidebar {
     position: fixed;
-    /* top: 0; */
-    left: 0;
+    left: 2%;
     width: 8%;
-    
-    /* background-color: #f4f4f4; */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-    /* Ombre à droite */
-
+    padding-bottom: 20px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .main-container
 {
-    margin-left: 8%;
-    /* background-color: bisque; */
-    display: flex; /* Active Flexbox */
-    justify-content: center; /* Centre horizontalement les enfants */
-    align-items: center; /* Centre verticalement les enfants (si nécessaire) */
-    flex-direction: column; /* Facultatif : Utilisez une direction verticale si les éléments doivent être empilés */
+    height: 65vh;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
 }
 
 .menu-item {
@@ -118,20 +112,33 @@
 
 .slide-container {
     display: flex;
-    gap: 20px;
-    /* Espacement entre les images */
+    gap: 20px; /* Adds space between the images */
 }
 
 .slide-item {
     text-align: center;
+    transition: transform 0.3s ease; /* Smooth scaling effect on hover */
+}
+
+.slide-item:hover {
+    transform: scale(1.1); 
 }
 
 .slide-item img {
-    width: 80px;
-    /* Ajustez la taille selon vos besoins */
+    width: 80px; 
     height: auto;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    border-radius: 5px; 
+    border: 2px solid transparent; 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.slide-item img:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-color:rgba(0, 0, 0, 0.2);
+}
+
+.slide-item img.selected {
+    border-color: #515779;
 }
 
 .slide-item span {
@@ -141,8 +148,9 @@
     color: #333;
 }
 
+
 .center-container {
-    background-color: aqua;
+    height: 65vh;
     display: grid;
     grid-template-areas:
         "left center right"
@@ -151,53 +159,57 @@
     grid-template-rows: auto auto;
     justify-content: center;
     align-items: center;
+    
 }
 
 .left-item {
     grid-area: left;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-right: -70px;
 }
 
 .center-item {
+    margin-top: -40px;
     grid-area: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: -50px;
-    margin-top: -70px;
-}
-
-.right-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .top-right {
     grid-area: right;
-    /* Place l'élément en haut à droite */
     margin-top: -250px !important;
-    margin-left: -30px !important;
+    margin-left: -25px !important;
 }
 
 .bottom-right {
     grid-area: right;
-    /* Place l'élément en bas à droite */
     margin-bottom: -150px;
-    /* Ajuste l'espacement */
-    margin-left: -30px !important;
+    margin-left: -25px !important;
 }
 
 .left-item img,
 .center-item img {
     max-width: 450px;
-    max-height: 450px;
+    max-height: 400px;
 }
 
 .right-item img {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 200px;
+    max-height: 200px;
 }
 
+.initial-images {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 20px; 
+  }
+  
+  .initial-images img {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 8px; 
+    border: 1px solid #ddd;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+
+  

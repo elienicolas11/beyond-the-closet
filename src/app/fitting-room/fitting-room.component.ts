@@ -5,29 +5,47 @@ import { Location } from '@angular/common';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faRedo, faSave } from '@fortawesome/free-solid-svg-icons';
 
-
 @Component({
   selector: 'app-fitting-room',
   standalone: true,
-  imports: [CommonModule,  FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule],
   templateUrl: './fitting-room.component.html',
   styleUrls: ['./fitting-room.component.css'],
 })
 export class FittingRoomComponent implements OnInit {
-  tenue: string | null = null;
+  tenue: string | null = null; // Tenue sélectionnée depuis la route
+  showInitialImages: boolean = true; // Contrôle de l'affichage initial des images
+  
+  selectedIndexes: { [key: string]: number | null } = {
+    haut: null,
+    bas: null,
+    chaussure: null,
+    sac: null,
+  };
+  
+  // Centralized default values
+  private readonly defaultSelections = {
+    selectedCategory: 'haut' as 'haut' | 'bas' | 'chaussure' | 'sac',
+    selectedTop: '',
+    selectedBottom: '',
+    selectedShoe: '',
+    selectedBag: '',
+    selectedTopLabel: '',
+    selectedBottomLabel: '',
+    selectedShoeLabel: '',
+    selectedBagLabel: '',
+  };
 
-  // Default categories and selections
-  selectedCategory: 'haut' | 'bas' | 'chaussure' | 'sac' = 'haut';
-
-  selectedTop = 'img/haut_icone.png';
-  selectedBottom = 'img/bas_icone.png';
-  selectedShoe = 'img/chaussure_icone.png';
-  selectedBag = 'img/sac_icone.png';
-
-  selectedTopLabel = '';
-  selectedBottomLabel = '';
-  selectedShoeLabel = '';
-  selectedBagLabel = '';
+  // Sélections dynamiques
+  selectedCategory = this.defaultSelections.selectedCategory;
+  selectedTop = this.defaultSelections.selectedTop;
+  selectedBottom = this.defaultSelections.selectedBottom;
+  selectedShoe = this.defaultSelections.selectedShoe;
+  selectedBag = this.defaultSelections.selectedBag;
+  selectedTopLabel = this.defaultSelections.selectedTopLabel;
+  selectedBottomLabel = this.defaultSelections.selectedBottomLabel;
+  selectedShoeLabel = this.defaultSelections.selectedShoeLabel;
+  selectedBagLabel = this.defaultSelections.selectedBagLabel;
 
   slideBarItems: { image: string; label: string }[] = [];
   categories = {
@@ -51,7 +69,7 @@ export class FittingRoomComponent implements OnInit {
       { image: 'img/clothes/chaussure1.png', label: 'Chaussure 1' },
       { image: 'img/clothes/chaussure2.png', label: 'Chaussure 2' },
       { image: 'img/clothes/chaussure3.png', label: 'Chaussure 3' },
-      { image: 'img/clothes/chaussure4.png', label: 'Chaussure 4' }
+      { image: 'img/clothes/chaussure4.png', label: 'Chaussure 4' },
     ],
     sac: [
       { image: 'img/clothes/sac1.png', label: 'Sac 1' },
@@ -59,49 +77,91 @@ export class FittingRoomComponent implements OnInit {
       { image: 'img/clothes/sac3.png', label: 'Sac 3' },
       { image: 'img/clothes/sac4.png', label: 'Sac 4' },
       { image: 'img/clothes/sac5.png', label: 'Sac 5' },
-    ]
+    ],
   };
-  constructor(private route: ActivatedRoute, private location: Location,private library: FaIconLibrary) {
+
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private library: FaIconLibrary
+  ) {
     library.addIcons(faArrowLeft, faRedo, faSave);
   }
+
   ngOnInit(): void {
-    // Get tenue parameter from the route
+    // Récupérer la tenue depuis la route
     this.tenue = this.route.snapshot.paramMap.get('tenue');
     this.updateSlideBarItems();
   }
-  
 
+  // Action pour quitter
   onExit() {
     console.log('Exit button clicked');
-     this.location.back();
+    this.location.back();
   }
-  
+
+  // Action pour redémarrer
   onRestart() {
     console.log('Restart button clicked');
-    // Logique pour redémarrer
+    Object.assign(this, this.defaultSelections); 
+    this.selectedIndexes = {
+      haut: null,
+      bas: null,
+      chaussure: null,
+      sac: null,
+    };
+    this.showInitialImages = true;
+    this.updateSlideBarItems();
+    console.log('Application reset to default values.');
   }
-  
+
+  // Action pour sauvegarder
   onSave() {
     console.log('Save button clicked');
-    // Logique pour sauvegarder
+    const tenueData = {
+      category: this.selectedCategory,
+      top: { image: this.selectedTop, label: this.selectedTopLabel },
+      bottom: { image: this.selectedBottom, label: this.selectedBottomLabel },
+      shoe: { image: this.selectedShoe, label: this.selectedShoeLabel },
+      bag: { image: this.selectedBag, label: this.selectedBagLabel },
+    };
+    console.log('Tenue saved:', tenueData);
+    alert('Votre tenue a été sauvegardée avec succès !');
   }
-  
 
+  // Mise à jour des éléments de la barre de défilement
   updateSlideBarItems() {
     this.slideBarItems = this.categories[this.selectedCategory];
   }
 
+  // Gestion de la sélection d'une catégorie
   selectCategory(category: 'haut' | 'bas' | 'chaussure' | 'sac') {
     this.selectedCategory = category;
     this.updateSlideBarItems();
   }
 
-  onSlideBarItemClick(item: { image: string; label: string }) {
+  // Gestion du clic sur un élément de la barre de défilement
+  onSlideBarItemClick(item: { image: string; label: string }, index: number) {
+    this.showInitialImages = false; // Masquer les images initiales
+    this.selectedIndexes[this.selectedCategory] = index; // Mémoriser l'index sélectionné pour la catégorie active
+  
     switch (this.selectedCategory) {
-      case 'haut': this.selectedTop = item.image; this.selectedTopLabel = item.label; break;
-      case 'bas': this.selectedBottom = item.image; this.selectedBottomLabel = item.label; break;
-      case 'chaussure': this.selectedShoe = item.image; this.selectedShoeLabel = item.label; break;
-      case 'sac': this.selectedBag = item.image; this.selectedBagLabel = item.label; break;
+      case 'haut':
+        this.selectedTop = item.image;
+        this.selectedTopLabel = item.label;
+        break;
+      case 'bas':
+        this.selectedBottom = item.image;
+        this.selectedBottomLabel = item.label;
+        break;
+      case 'chaussure':
+        this.selectedShoe = item.image;
+        this.selectedShoeLabel = item.label;
+        break;
+      case 'sac':
+        this.selectedBag = item.image;
+        this.selectedBagLabel = item.label;
+        break;
     }
-  }
+  }  
 }
