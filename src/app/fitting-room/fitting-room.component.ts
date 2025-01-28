@@ -1,11 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft, faRedo, faSave } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-fitting-room',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,  FontAwesomeModule],
   templateUrl: './fitting-room.component.html',
   styleUrls: ['./fitting-room.component.css'],
 })
@@ -15,15 +19,15 @@ export class FittingRoomComponent implements OnInit {
   // Default categories and selections
   selectedCategory: 'haut' | 'bas' | 'chaussure' | 'sac' = 'haut';
 
-  selectedTop = 'img/clothes/haut1.png';
-  selectedBottom = 'img/clothes/bas1.png';
-  selectedShoe = 'img/clothes/chaussure1.png';
-  selectedBag = 'img/clothes/sac1.png';
+  selectedTop = 'img/haut_icone.png';
+  selectedBottom = 'img/bas_icone.png';
+  selectedShoe = 'img/chaussure_icone.png';
+  selectedBag = 'img/sac_icone.png';
 
-  selectedTopLabel = 'haut 1';
-  selectedBottomLabel = 'bas 1';
-  selectedShoeLabel = 'Chaussure 1';
-  selectedBagLabel = 'Sac 1';
+  selectedTopLabel = '';
+  selectedBottomLabel = '';
+  selectedShoeLabel = '';
+  selectedBagLabel = '';
 
   slideBarItems: { image: string; label: string }[] = [];
   categories = {
@@ -57,13 +61,31 @@ export class FittingRoomComponent implements OnInit {
       { image: 'img/clothes/sac5.png', label: 'Sac 5' },
     ]
   };
-  constructor(private route: ActivatedRoute) {}
-
+  constructor(private route: ActivatedRoute, private location: Location,private library: FaIconLibrary) {
+    library.addIcons(faArrowLeft, faRedo, faSave);
+  }
   ngOnInit(): void {
     // Get tenue parameter from the route
     this.tenue = this.route.snapshot.paramMap.get('tenue');
     this.updateSlideBarItems();
   }
+  
+
+  onExit() {
+    console.log('Exit button clicked');
+     this.location.back();
+  }
+  
+  onRestart() {
+    console.log('Restart button clicked');
+    // Logique pour redémarrer
+  }
+  
+  onSave() {
+    console.log('Save button clicked');
+    // Logique pour sauvegarder
+  }
+  
 
   updateSlideBarItems() {
     this.slideBarItems = this.categories[this.selectedCategory];
