@@ -21,6 +21,7 @@
     "@fortawesome/angular-fontawesome": "^1.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "html2canvas": "^1.4.1",
     "rxjs": "~7.8.0",
     "three": "^0.172.0",
     "three-stdlib": "^2.35.12",

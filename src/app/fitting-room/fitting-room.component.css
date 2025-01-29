@@ -9,12 +9,12 @@
 
 .top-bar {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     position: sticky;
     top: 0;
     z-index: 10;
-    position: relative; 
+    position: relative;
 }
 
 .top-bar span {
@@ -27,25 +27,25 @@
 
 .icon-buttons {
     position: absolute;
-    right: 20px; 
-    top: 50%; 
+    right: 20px;
+    top: 50%;
     transform: translateY(-50%);
     display: flex;
     gap: 15px;
 }
 
 .icon-buttons .icon {
-    font-size: 1.2rem; 
-    color: #515779; 
+    font-size: 1.2rem;
+    color: #515779;
     cursor: pointer;
-    width: 30px; 
-    height: 30px; 
-    border: 2px solid #515779; 
-    border-radius: 50%; 
+    width: 30px;
+    height: 30px;
+    border: 2px solid #515779;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
-    align-items: center; 
-    background-color: whitesmoke; 
+    align-items: center;
+    background-color: whitesmoke;
     transition: transform 0.2s ease, color 0.3s ease, background-color 0.3s ease;
 }
 
@@ -53,7 +53,7 @@
     transform: scale(1.1);
     color: #6b6f91;
     background-color: #f0f0f0;
-    border-color: #6b6f91; 
+    border-color: #6b6f91;
 }
 
 .sidebar {
@@ -68,13 +68,12 @@
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
-.main-container
-{
+.main-container {
     height: 65vh;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    flex-direction: column; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .menu-item {
@@ -121,20 +120,20 @@
 }
 
 .slide-item:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 .slide-item img {
-    width: 80px; 
+    width: 80px;
     height: auto;
-    border-radius: 5px; 
-    border: 2px solid transparent; 
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+    border-radius: 5px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .slide-item img:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    border-color:rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
 .slide-item img.selected {
@@ -148,39 +147,53 @@
     color: #333;
 }
 
-
 .center-container {
+    max-width: 70%;
+    margin: 0 auto; 
     height: 65vh;
     display: grid;
     grid-template-areas:
         "left center right"
         "left center right";
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 2fr auto; 
     grid-template-rows: auto auto;
     justify-content: center;
     align-items: center;
-    
+    column-gap: 20px;
+    position: relative;
 }
 
 .left-item {
     grid-area: left;
     margin-right: -70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .center-item {
-    margin-top: -40px;
     grid-area: center;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .top-right {
     grid-area: right;
-    margin-top: -250px !important;
+    margin-top: -220px !important;
     margin-left: -25px !important;
 }
 
 .bottom-right {
     grid-area: right;
-    margin-bottom: -150px;
+    margin-bottom: -120px;
     margin-left: -25px !important;
 }
 
@@ -193,23 +206,22 @@
 .right-item img {
     max-width: 200px;
     max-height: 200px;
+    width: auto;
+    height: auto;
 }
 
 .initial-images {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 10px; 
-    margin-top: 20px; 
-  }
-  
-  .initial-images img {
-    width: 50px; 
-    height: 50px; 
-    border-radius: 8px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.initial-images img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
     border: 1px solid #ddd;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-
-  
+}

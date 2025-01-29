@@ -45,11 +45,22 @@
       </div>
       
       <div *ngIf="!showInitialImages" class="center-container">
-        <div class="left-item"><img *ngIf="selectedBottom" [src]="selectedBottom" alt="Bottom" /></div>
-        <div class="center-item"><img *ngIf="selectedTop" [src]="selectedTop" alt="Top"></div>
-        <div class="right-item top-right"><img *ngIf="selectedShoe" [src]="selectedShoe" alt="Shoe"></div>
-        <div class="right-item bottom-right"><img *ngIf="selectedBag" [src]="selectedBag" alt="Bag"></div>
+        <div class="left-item" *ngIf="selectedBottom">
+          <img [src]="selectedBottom" alt="Bottom" />
+        </div>
+        <div class="center-item" *ngIf="selectedTop">
+          <img [src]="selectedTop" alt="Top" />
+        </div>
+        <div class="right-item top-right" *ngIf="selectedShoe">
+          <img [src]="selectedShoe" alt="Shoe" />
+        </div>
+        <div class="right-item bottom-right" *ngIf="selectedBag">
+          <img [src]="selectedBag" alt="Bag" />
+        </div>
       </div>
+
+      
+      
     
     <!-- Image Slide Bar -->
     <div class="image-slide-bar">

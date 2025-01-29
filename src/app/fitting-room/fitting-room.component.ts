@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft, faRedo, faSave } from '@fortawesome/free-solid-svg-icons';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-fitting-room',
@@ -115,19 +117,82 @@ export class FittingRoomComponent implements OnInit {
     console.log('Application reset to default values.');
   }
 
-  // Action pour sauvegarder
   onSave() {
     console.log('Save button clicked');
-    const tenueData = {
-      category: this.selectedCategory,
-      top: { image: this.selectedTop, label: this.selectedTopLabel },
-      bottom: { image: this.selectedBottom, label: this.selectedBottomLabel },
-      shoe: { image: this.selectedShoe, label: this.selectedShoeLabel },
-      bag: { image: this.selectedBag, label: this.selectedBagLabel },
-    };
-    console.log('Tenue saved:', tenueData);
-    alert('Votre tenue a été sauvegardée avec succès !');
+    const elementToCapture = document.querySelector('.center-container') as HTMLElement;
+  
+    if (elementToCapture) {
+      html2canvas(elementToCapture).then((canvas) => {
+        const minWidth = 800; // Largeur minimale
+        const maxWidth = 1200; // Largeur maximale
+  
+        let finalWidth = canvas.width;
+        let finalHeight = canvas.height;
+  
+        if (finalWidth < minWidth) {
+          finalHeight = (minWidth / finalWidth) * finalHeight;
+          finalWidth = minWidth;
+        } else if (finalWidth > maxWidth) {
+          finalHeight = (maxWidth / finalWidth) * finalHeight;
+          finalWidth = maxWidth;
+        }
+  
+        const now = new Date();
+        const formattedDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
+        const formattedTime = now
+          .toTimeString()
+          .split(' ')[0]
+          .replace(/:/g, '-'); // HH-MM-SS
+        const fileName = `BTC_${formattedDate}_${formattedTime}.png`;
+  
+        const finalCanvas = document.createElement('canvas');
+        const ctx = finalCanvas.getContext('2d')!;
+        finalCanvas.width = finalWidth;
+        finalCanvas.height = finalHeight + 120; 
+  
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+  
+        ctx.font = '64px Pacifico'; 
+        ctx.fillStyle = '#515779'; 
+        ctx.textAlign = 'center';
+        ctx.shadowColor = 'whitesmoke'; 
+        ctx.shadowBlur = 4; 
+        ctx.shadowOffsetX = 2; 
+        ctx.shadowOffsetY = 2; 
+        ctx.fillText(this.tenue || 'Tenue', finalCanvas.width / 2, 80); // Ajustez la valeur Y pour le titre
+  
+        ctx.drawImage(
+          canvas,
+          0,
+          0,
+          canvas.width,
+          canvas.height,
+          0,
+          120, 
+          finalWidth,
+          finalHeight
+        );
+  
+        const image = finalCanvas.toDataURL('image/png');
+  
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = fileName;
+        link.click();
+  
+        alert(`Votre tenue a été sauvegardée avec succès sous le nom : ${fileName}`);
+      }).catch((error) => {
+        console.error('Erreur lors de la capture de l\'élément :', error);
+        alert('Erreur lors de la sauvegarde de votre tenue.');
+      });
+    } else {
+      console.error('Erreur : élément ".center-container" introuvable.');
+      alert('Veuillez choisir une tenue avant de sauvegarder.');
+    }
   }
+  
+  
 
   // Mise à jour des éléments de la barre de défilement
   updateSlideBarItems() {
