@@ -15,7 +15,7 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./fitting-room.component.css'],
 })
 export class FittingRoomComponent implements OnInit {
-  tenue: string | null = null; // Tenue sélectionnée depuis la route
+  tenue: string | null = null; 
   showInitialImages: boolean = true; // Contrôle de l'affichage initial des images
   
   selectedIndexes: { [key: string]: number | null } = {
@@ -50,6 +50,34 @@ export class FittingRoomComponent implements OnInit {
   selectedBagLabel = this.defaultSelections.selectedBagLabel;
 
   slideBarItems: { image: string; label: string }[] = [];
+  
+  categoriesGlam = {
+    dress: [
+      { image: 'img/clothes/dress1.png', label: 'Dress 1' },
+      { image: 'img/clothes/dress2.png', label: 'Dress 2' },
+      { image: 'img/clothes/dress3.png', label: 'Dress 3' },
+      { image: 'img/clothes/dress4.png', label: 'Dress 4' },
+      { image: 'img/clothes/dress5.png', label: 'Dress 5' },
+      { image: 'img/clothes/dress6.png', label: 'Dress 6' },
+    ],
+    heels: [
+      { image: 'img/clothes/heels1.png', label: 'Heels 1' },
+      { image: 'img/clothes/heels2.png', label: 'Heels 2' },
+      { image: 'img/clothes/heels3.png', label: 'Heels 3' },
+      { image: 'img/clothes/heels4.png', label: 'Heels 4' },
+      { image: 'img/clothes/heels5.png', label: 'Heels 5' },
+      { image: 'img/clothes/heels6.png', label: 'Heels 6' },
+    ],
+    sac: [
+      { image: 'img/glam/sac7.png', label: 'Sac 7' },
+      { image: 'img/glam/sac8.png', label: 'Sac 8' },
+      { image: 'img/glam/sac9.png', label: 'Sac 9' },
+      { image: 'img/glam/sac10.png', label: 'Sac 10' },
+      { image: 'img/glam/sac11.png', label: 'Sac 11' },
+    ],
+  };
+  
+  
   categories = {
     haut: [
       { image: 'img/clothes/haut1.png', label: 'haut 1' },
@@ -79,6 +107,7 @@ export class FittingRoomComponent implements OnInit {
       { image: 'img/clothes/sac3.png', label: 'Sac 3' },
       { image: 'img/clothes/sac4.png', label: 'Sac 4' },
       { image: 'img/clothes/sac5.png', label: 'Sac 5' },
+      { image: 'img/clothes/sac6.png', label: 'Sac 6' },
     ],
   };
 
@@ -191,10 +220,7 @@ export class FittingRoomComponent implements OnInit {
       alert('Veuillez choisir une tenue avant de sauvegarder.');
     }
   }
-  
-  
 
-  // Mise à jour des éléments de la barre de défilement
   updateSlideBarItems() {
     this.slideBarItems = this.categories[this.selectedCategory];
   }
