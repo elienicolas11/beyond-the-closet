@@ -1,5 +1,4 @@
 <div class="fitting-room-container">
-  <!-- Top Bar -->
   <div class="top-bar">
     <span>{{ tenue }}</span>
     <div class="icon-buttons">
@@ -8,14 +7,62 @@
       <fa-icon [icon]="'save'" class="icon" (click)="onSave()"></fa-icon>
     </div>
   </div>
-  
 
   <div *ngIf="tenue === 'Tenue Glam'">
-    <p>Loading the Tenue de Soirée...</p>
+    <div class="sidebar">
+      <div class="menu-item" (click)="selectCategory('robe')">
+        <img src="img/robe_icone.png" alt="Robe Icone" class="icon">
+        <span>Robe</span>
+      </div>
+      <div class="menu-item" (click)="selectCategory('talons')">
+        <img src="img/talons_icone.png" alt="Talons Icone" class="icon">
+        <span>Talons</span>
+      </div>
+      <div class="menu-item" (click)="selectCategory('glamsac')">
+        <img src="img/sac_icone.png" alt="Sac Icone" class="icon">
+        <span>Sac</span>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div *ngIf="showInitialImages" class="initial-images">
+        <img src="img/robe_icone.png" alt="Robe" />
+        <img src="img/talons_icone.png" alt="Talons" />
+        <img src="img/sac_icone.png" alt="Sac" />
+      </div>
+
+      <div *ngIf="!showInitialImages" class="center-container">
+        <div class="right-item bottom-right" *ngIf="selectedGlamSac">
+          <img [src]="selectedGlamSac" alt="Bottom" />
+        </div>
+        <div class="center-item" *ngIf="selectedRobe">
+          <img [src]="selectedRobe" alt="Top" />
+        </div>
+        <div class="right-item top-right" *ngIf="selectedTalons">
+          <img [src]="selectedTalons" alt="Bag" />
+        </div>
+      </div>
+
+      <div class="image-slide-bar">
+        <div class="slide-container">
+          <div
+            *ngFor="let item of slideBarItems; let i = index"
+            class="slide-item"
+            (click)="onSlideBarItemClick(item, i)"
+          >
+            <img
+              [src]="item.image"
+              [alt]="item.label"
+              [class.selected]="selectedIndexes[selectedCategory] === i"
+            />
+            <span>{{ item.label }}</span>
+          </div>
+        </div>
+      </div>        
+    </div>
   </div>
-  
+
   <div *ngIf="tenue === 'Tenue du jour'">
-    <!-- Sidebar -->
     <div class="sidebar">
       <div class="menu-item" (click)="selectCategory('haut')">
         <img src="img/haut_icone.png" alt="Haut Icon" class="icon">
@@ -36,14 +83,13 @@
     </div>
 
     <div class="main-container">
-      <!-- Center Display -->
       <div *ngIf="showInitialImages" class="initial-images">
         <img src="img/haut_icone.png" alt="Top" />
         <img src="img/bas_icone.png" alt="Bottom" />
         <img src="img/chaussure_icone.png" alt="Shoe" />
         <img src="img/sac_icone.png" alt="Bag" />
       </div>
-      
+
       <div *ngIf="!showInitialImages" class="center-container">
         <div class="left-item" *ngIf="selectedBottom">
           <img [src]="selectedBottom" alt="Bottom" />
@@ -59,27 +105,22 @@
         </div>
       </div>
 
-      
-      
-    
-    <!-- Image Slide Bar -->
-    <div class="image-slide-bar">
-      <div class="slide-container">
-        <div
-          *ngFor="let item of slideBarItems; let i = index"
-          class="slide-item"
-          (click)="onSlideBarItemClick(item, i)"
-        >
-          <!-- Ajouter la classe 'selected' si l'index correspond -->
-          <img
-            [src]="item.image"
-            [alt]="item.label"
-            [class.selected]="selectedIndexes[selectedCategory] === i"
-          />
-          <span>{{ item.label }}</span>
+      <div class="image-slide-bar">
+        <div class="slide-container">
+          <div
+            *ngFor="let item of slideBarItems; let i = index"
+            class="slide-item"
+            (click)="onSlideBarItemClick(item, i)"
+          >
+            <img
+              [src]="item.image"
+              [alt]="item.label"
+              [class.selected]="selectedIndexes[selectedCategory] === i"
+            />
+            <span>{{ item.label }}</span>
+          </div>
         </div>
-      </div>
-    </div>        
+      </div>        
+    </div>
   </div>
-</div>
 </div>

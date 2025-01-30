@@ -6,7 +6,6 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faArrowLeft, faRedo, faSave } from '@fortawesome/free-solid-svg-icons';
 import html2canvas from 'html2canvas';
 
-
 @Component({
   selector: 'app-fitting-room',
   standalone: true,
@@ -16,148 +15,93 @@ import html2canvas from 'html2canvas';
 })
 export class FittingRoomComponent implements OnInit {
   tenue: string | null = null; 
-  showInitialImages: boolean = true; // Contrôle de l'affichage initial des images
-  
+  showInitialImages: boolean = true;
+
   selectedIndexes: { [key: string]: number | null } = {
     haut: null,
     bas: null,
     chaussure: null,
     sac: null,
+    talons: null,
+    robe : null,
+    glamsac: null,
   };
-  
-  // Centralized default values
+
   private readonly defaultSelections = {
-    selectedCategory: 'haut' as 'haut' | 'bas' | 'chaussure' | 'sac',
+    selectedCategory: 'haut' as 'haut' | 'bas' | 'chaussure' | 'sac' | 'robe' | 'talons' | 'glamsac',
     selectedTop: '',
     selectedBottom: '',
     selectedShoe: '',
     selectedBag: '',
+    selectedRobe: '',
+    selectedTalons: '',
+    selectedGlamSac: '',
     selectedTopLabel: '',
     selectedBottomLabel: '',
     selectedShoeLabel: '',
     selectedBagLabel: '',
+    selectedRobeLabel: '',
+    selectedTalonsLabel: '',
+    selectedGlamSacLabel: '',
   };
 
-  // Sélections dynamiques
   selectedCategory = this.defaultSelections.selectedCategory;
   selectedTop = this.defaultSelections.selectedTop;
   selectedBottom = this.defaultSelections.selectedBottom;
   selectedShoe = this.defaultSelections.selectedShoe;
   selectedBag = this.defaultSelections.selectedBag;
+  selectedRobe = this.defaultSelections.selectedRobe;
+  selectedTalons = this.defaultSelections.selectedTalons;
+  selectedGlamSac = this.defaultSelections.selectedGlamSac;
   selectedTopLabel = this.defaultSelections.selectedTopLabel;
   selectedBottomLabel = this.defaultSelections.selectedBottomLabel;
   selectedShoeLabel = this.defaultSelections.selectedShoeLabel;
   selectedBagLabel = this.defaultSelections.selectedBagLabel;
+  selectedRobeLabel = this.defaultSelections.selectedRobeLabel;
+  selectedTalonsLabel = this.defaultSelections.selectedTalonsLabel;
+  selectedGlamSacLabel = this.defaultSelections.selectedGlamSacLabel;
 
   slideBarItems: { image: string; label: string }[] = [];
-  
-  categoriesGlam = {
-    dress: [
-      { image: 'img/clothes/dress1.png', label: 'Dress 1' },
-      { image: 'img/clothes/dress2.png', label: 'Dress 2' },
-      { image: 'img/clothes/dress3.png', label: 'Dress 3' },
-      { image: 'img/clothes/dress4.png', label: 'Dress 4' },
-      { image: 'img/clothes/dress5.png', label: 'Dress 5' },
-      { image: 'img/clothes/dress6.png', label: 'Dress 6' },
-    ],
-    heels: [
-      { image: 'img/clothes/heels1.png', label: 'Heels 1' },
-      { image: 'img/clothes/heels2.png', label: 'Heels 2' },
-      { image: 'img/clothes/heels3.png', label: 'Heels 3' },
-      { image: 'img/clothes/heels4.png', label: 'Heels 4' },
-      { image: 'img/clothes/heels5.png', label: 'Heels 5' },
-      { image: 'img/clothes/heels6.png', label: 'Heels 6' },
-    ],
-    sac: [
-      { image: 'img/glam/sac7.png', label: 'Sac 7' },
-      { image: 'img/glam/sac8.png', label: 'Sac 8' },
-      { image: 'img/glam/sac9.png', label: 'Sac 9' },
-      { image: 'img/glam/sac10.png', label: 'Sac 10' },
-      { image: 'img/glam/sac11.png', label: 'Sac 11' },
-    ],
-  };
-  
-  
+
   categories = {
-    haut: [
-      { image: 'img/clothes/haut1.png', label: 'haut 1' },
-      { image: 'img/clothes/haut2.png', label: 'haut 2' },
-      { image: 'img/clothes/haut3.png', label: 'haut 3' },
-      { image: 'img/clothes/haut4.png', label: 'haut 4' },
-      { image: 'img/clothes/haut5.png', label: 'haut 5' },
-      { image: 'img/clothes/haut6.png', label: 'haut 6' },
-    ],
-    bas: [
-      { image: 'img/clothes/bas1.png', label: 'bas 1' },
-      { image: 'img/clothes/bas2.png', label: 'bas 2' },
-      { image: 'img/clothes/bas3.png', label: 'bas 3' },
-      { image: 'img/clothes/bas4.png', label: 'bas 4' },
-      { image: 'img/clothes/bas5.png', label: 'bas 5' },
-      { image: 'img/clothes/bas6.png', label: 'bas 6' },
-    ],
-    chaussure: [
-      { image: 'img/clothes/chaussure1.png', label: 'Chaussure 1' },
-      { image: 'img/clothes/chaussure2.png', label: 'Chaussure 2' },
-      { image: 'img/clothes/chaussure3.png', label: 'Chaussure 3' },
-      { image: 'img/clothes/chaussure4.png', label: 'Chaussure 4' },
-    ],
-    sac: [
-      { image: 'img/clothes/sac1.png', label: 'Sac 1' },
-      { image: 'img/clothes/sac2.png', label: 'Sac 2' },
-      { image: 'img/clothes/sac3.png', label: 'Sac 3' },
-      { image: 'img/clothes/sac4.png', label: 'Sac 4' },
-      { image: 'img/clothes/sac5.png', label: 'Sac 5' },
-      { image: 'img/clothes/sac6.png', label: 'Sac 6' },
-    ],
+    haut: [...Array(6)].map((_, i) => ({ image: `img/clothes/haut${i + 1}.png`, label: `haut ${i + 1}` })),
+    bas: [...Array(6)].map((_, i) => ({ image: `img/clothes/bas${i + 1}.png`, label: `bas ${i + 1}` })),
+    chaussure: [...Array(4)].map((_, i) => ({ image: `img/clothes/chaussure${i + 1}.png`, label: `Chaussure ${i + 1}` })),
+    sac: [...Array(6)].map((_, i) => ({ image: `img/clothes/sac${i + 1}.png`, label: `Sac ${i + 1}` })),
+    robe: [...Array(6)].map((_, i) => ({ image: `img/clothes/dress${i + 1}.png`, label: `Robe ${i + 1}` })),
+    talons: [...Array(6)].map((_, i) => ({ image: `img/clothes/heels${i + 1}.png`, label: `Talons ${i + 1}` })),
+    glamsac: [...Array(5)].map((_, i) => ({ image: `img/clothes/sac${i + 7}.png`, label: `Sac ${i + 7}` })),
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private location: Location,
-    private library: FaIconLibrary
-  ) {
+  constructor(private route: ActivatedRoute, private location: Location, private library: FaIconLibrary) {
     library.addIcons(faArrowLeft, faRedo, faSave);
   }
 
   ngOnInit(): void {
-    // Récupérer la tenue depuis la route
     this.tenue = this.route.snapshot.paramMap.get('tenue');
+    this.selectedCategory = this.tenue === "Tenue Glam" ? 'robe' : 'haut';
     this.updateSlideBarItems();
   }
 
-  // Action pour quitter
   onExit() {
-    console.log('Exit button clicked');
     this.location.back();
   }
 
-  // Action pour redémarrer
   onRestart() {
-    console.log('Restart button clicked');
     Object.assign(this, this.defaultSelections); 
-    this.selectedIndexes = {
-      haut: null,
-      bas: null,
-      chaussure: null,
-      sac: null,
-    };
+    this.selectedIndexes = { haut: null, bas: null, chaussure: null, sac: null, talons: null, robe : null, glamsac: null };
     this.showInitialImages = true;
     this.updateSlideBarItems();
-    console.log('Application reset to default values.');
   }
 
   onSave() {
-    console.log('Save button clicked');
     const elementToCapture = document.querySelector('.center-container') as HTMLElement;
-  
+
     if (elementToCapture) {
-      html2canvas(elementToCapture).then((canvas) => {
-        const minWidth = 800; // Largeur minimale
-        const maxWidth = 1200; // Largeur maximale
-  
-        let finalWidth = canvas.width;
-        let finalHeight = canvas.height;
-  
+      html2canvas(elementToCapture, { backgroundColor: null }).then((canvas) => {
+        const minWidth = 800, maxWidth = 1200;
+        let finalWidth = canvas.width, finalHeight = canvas.height;
+
         if (finalWidth < minWidth) {
           finalHeight = (minWidth / finalWidth) * finalHeight;
           finalWidth = minWidth;
@@ -165,58 +109,37 @@ export class FittingRoomComponent implements OnInit {
           finalHeight = (maxWidth / finalWidth) * finalHeight;
           finalWidth = maxWidth;
         }
-  
-        const now = new Date();
-        const formattedDate = now.toISOString().slice(0, 10); // YYYY-MM-DD
-        const formattedTime = now
-          .toTimeString()
-          .split(' ')[0]
-          .replace(/:/g, '-'); // HH-MM-SS
-        const fileName = `BTC_${formattedDate}_${formattedTime}.png`;
-  
+
+        const padding = 50;
         const finalCanvas = document.createElement('canvas');
         const ctx = finalCanvas.getContext('2d')!;
-        finalCanvas.width = finalWidth;
-        finalCanvas.height = finalHeight + 120; 
-  
+        finalCanvas.width = finalWidth + 2 * padding;
+        finalCanvas.height = finalHeight + 150;
+        const centerX = (finalCanvas.width - finalWidth) / 2;
+
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
-  
-        ctx.font = '64px Pacifico'; 
-        ctx.fillStyle = '#515779'; 
+        ctx.font = '64px Pacifico';
+        ctx.fillStyle = '#515779';
         ctx.textAlign = 'center';
-        ctx.shadowColor = 'whitesmoke'; 
-        ctx.shadowBlur = 4; 
-        ctx.shadowOffsetX = 2; 
-        ctx.shadowOffsetY = 2; 
-        ctx.fillText(this.tenue || 'Tenue', finalCanvas.width / 2, 80); // Ajustez la valeur Y pour le titre
-  
-        ctx.drawImage(
-          canvas,
-          0,
-          0,
-          canvas.width,
-          canvas.height,
-          0,
-          120, 
-          finalWidth,
-          finalHeight
-        );
-  
+        ctx.shadowColor = 'whitesmoke';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        ctx.fillText(this.tenue || 'Tenue', finalCanvas.width / 2, 80);
+        ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, centerX, 120, finalWidth, finalHeight);
+
         const image = finalCanvas.toDataURL('image/png');
-  
+        const now = new Date();
+        const fileName = `BTC_${now.toISOString().slice(0, 10)}_${now.toTimeString().split(' ')[0].replace(/:/g, '-')}.png`;
         const link = document.createElement('a');
         link.href = image;
         link.download = fileName;
         link.click();
-  
+
         alert(`Votre tenue a été sauvegardée avec succès sous le nom : ${fileName}`);
-      }).catch((error) => {
-        console.error('Erreur lors de la capture de l\'élément :', error);
-        alert('Erreur lors de la sauvegarde de votre tenue.');
-      });
+      }).catch(() => alert('Erreur lors de la sauvegarde de votre tenue.'));
     } else {
-      console.error('Erreur : élément ".center-container" introuvable.');
       alert('Veuillez choisir une tenue avant de sauvegarder.');
     }
   }
@@ -225,34 +148,23 @@ export class FittingRoomComponent implements OnInit {
     this.slideBarItems = this.categories[this.selectedCategory];
   }
 
-  // Gestion de la sélection d'une catégorie
-  selectCategory(category: 'haut' | 'bas' | 'chaussure' | 'sac') {
+  selectCategory(category: 'haut' | 'bas' | 'chaussure' | 'sac' | 'robe' | 'talons' | 'glamsac') {
     this.selectedCategory = category;
     this.updateSlideBarItems();
   }
 
-  // Gestion du clic sur un élément de la barre de défilement
   onSlideBarItemClick(item: { image: string; label: string }, index: number) {
-    this.showInitialImages = false; // Masquer les images initiales
-    this.selectedIndexes[this.selectedCategory] = index; // Mémoriser l'index sélectionné pour la catégorie active
-  
+    this.showInitialImages = false;
+    this.selectedIndexes[this.selectedCategory] = index;
+
     switch (this.selectedCategory) {
-      case 'haut':
-        this.selectedTop = item.image;
-        this.selectedTopLabel = item.label;
-        break;
-      case 'bas':
-        this.selectedBottom = item.image;
-        this.selectedBottomLabel = item.label;
-        break;
-      case 'chaussure':
-        this.selectedShoe = item.image;
-        this.selectedShoeLabel = item.label;
-        break;
-      case 'sac':
-        this.selectedBag = item.image;
-        this.selectedBagLabel = item.label;
-        break;
+      case 'haut': this.selectedTop = item.image; this.selectedTopLabel = item.label; break;
+      case 'bas': this.selectedBottom = item.image; this.selectedBottomLabel = item.label; break;
+      case 'chaussure': this.selectedShoe = item.image; this.selectedShoeLabel = item.label; break;
+      case 'sac': this.selectedBag = item.image; this.selectedBagLabel = item.label; break;
+      case 'robe': this.selectedRobe = item.image; this.selectedRobeLabel = item.label; break;
+      case 'glamsac': this.selectedGlamSac = item.image; this.selectedGlamSacLabel = item.label; break;
+      case 'talons': this.selectedTalons = item.image; this.selectedTalonsLabel = item.label; break;
     }
-  }  
+  }
 }
