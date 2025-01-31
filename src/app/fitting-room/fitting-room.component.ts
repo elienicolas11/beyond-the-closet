@@ -64,14 +64,14 @@ export class FittingRoomComponent implements OnInit {
   slideBarItems: { image: string; label: string }[] = [];
 
   categories = {
-    haut: [...Array(6)].map((_, i) => ({ image: `img/clothes/haut${i + 1}.png`, label: `haut ${i + 1}` })),
-    bas: [...Array(6)].map((_, i) => ({ image: `img/clothes/bas${i + 1}.png`, label: `bas ${i + 1}` })),
-    chaussure: [...Array(4)].map((_, i) => ({ image: `img/clothes/chaussure${i + 1}.png`, label: `Chaussure ${i + 1}` })),
-    sac: [...Array(6)].map((_, i) => ({ image: `img/clothes/sac${i + 1}.png`, label: `Sac ${i + 1}` })),
-    robe: [...Array(6)].map((_, i) => ({ image: `img/clothes/dress${i + 1}.png`, label: `Robe ${i + 1}` })),
-    talons: [...Array(6)].map((_, i) => ({ image: `img/clothes/heels${i + 1}.png`, label: `Talons ${i + 1}` })),
-    glamsac: [...Array(5)].map((_, i) => ({ image: `img/clothes/sac${i + 7}.png`, label: `Sac ${i + 7}` })),
-  };
+    haut: [...Array(6)].map((_, i) => ({ image: `img/clothes/haut${i + 1}.png`, label: [`Élégance Douce`, `Chic Urbain`, `Décontracté Cool`, `Soleil d'Été`, `Tendance Minimaliste`, `Casual Class`][i] })),
+    bas: [...Array(6)].map((_, i) => ({ image: `img/clothes/bas${i + 1}.png`, label: [`Relax`, `Classique Intemporel`, `Sporty Chic`, `Barbie`, `Casual Week-end`, `Mode Street`][i] })),
+    chaussure: [...Array(4)].map((_, i) => ({ image: `img/clothes/chaussure${i + 1}.png`, label: [`Baskets Confort`, `Boots Audacieuses`,  `Sneakers Fresh`, `Sneakers Glamour` ][i] })),
+    sac: [...Array(6)].map((_, i) => ({ image: `img/clothes/sac${i + 1}.png`, label: [`Sac Élégance`, `Tote Chic`, `Mini Glam`, `Sac Bohème`, `Cabas Trendy`, `Pochette Luxe`][i] })),
+    robe: [...Array(6)].map((_, i) => ({ image: `img/clothes/dress${i + 1}.png`, label: [`Robe Romantique`, `Cocktail Glam`, `Fluide Bohème`, `Chic Soirée`, `Été Frais`, `Élégance Pure`][i] })),
+    talons: [...Array(6)].map((_, i) => ({ image: `img/clothes/heels${i + 1}.png`, label: [`Talons Glam`, `Escarpins Élégants`, `Chic Raffiné`, `Hauteur Luxe`, `Mode Audacieuse`, `Effet Catwalk`][i] })),
+    glamsac: [...Array(5)].map((_, i) => ({ image: `img/clothes/sac${i + 7}.png`, label: [`Sac Prestige`, `Pochette Brillante`, `Tendance Élite`, `Luxe Minimal`, `Sac Star`][i] })),
+};
 
   constructor(private route: ActivatedRoute, private location: Location, private library: FaIconLibrary) {
     library.addIcons(faArrowLeft, faRedo, faSave);

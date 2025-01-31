@@ -1,59 +1,95 @@
-# BeyondTheCloset
+# **👗 Beyond The Closet - Planificateur de tenues interactif**  
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.1.
+## **📖 Description du projet**  
+**Beyond The Closet** est une **application web interactive** qui aide les utilisateurs à **composer et organiser leurs tenues** sans effort. Ce projet est conçu pour ceux qui ont du mal à associer des vêtements ou qui veulent **planifier leurs looks à l'avance** pour des événements ou des vacances.  
 
-## Development server
+Avec une **interface intuitive**, l'utilisateur peut :  
+✅ **Sélectionner des vêtements et accessoires** parmi différentes catégories.  
+✅ **Composer des tenues** avec un affichage clair.  
+✅ **Capturer et sauvegarder** ses ensembles.  
+✅ **Gagner du temps** en retrouvant facilement ses looks enregistrés.  
 
-To start a local development server, run:
+L'application utilise Angular, Three.js et html2canvas. Three.js permet d'ajouter un design 3D immersif (éléments en 3D comme le cintre, le stand, etc.), mais l'objectif n'est pas de visualiser les vêtements en 3D. L'application est avant tout un outil de planification de looks
+---
 
+## **🛠️ Technologies & Bibliothèques utilisées**  
+
+### **📌 Frontend :**  
+- **Angular** *(Framework JS moderne pour le développement web)*  
+- **TypeScript** *(Langage robuste avec typage statique)*  
+- **SCSS / CSS3** *(Pour un design élégant et fluide)*  
+- **HTML5** *(Structuration des composants)*  
+- **RouterModule** *(Gestion des routes dans Angular)*  
+
+### **📸 Capture et Sauvegarde des tenues :**  
+- **html2canvas** *(Convertit l'affichage en image téléchargeable)*  
+
+### **🎨 Effets 3D & Graphismes :**  
+- **Three.js** *(Ajoute un design moderne en 3D à l’interface)*  
+- **GLTFLoader** *(Chargement des modèles .glb et .gltf pour le décor et les éléments interactifs comme le cintre et le stand)*  
+
+### **🖼️ Interface utilisateur :**  
+- **Affichage organisé des vêtements et accessoires** *(Par catégories)*  
+- **Sélection et combinaison facile** *(Clic pour ajouter à la tenue)*  
+- **Bouton "Sauvegarder la tenue"** *(Capture et télécharge l’image de la tenue)*  
+
+---
+
+## **🖥️ Installation & Exécution**  
+
+### **1️⃣ Prérequis**  
+Avant de commencer, assure-toi d'avoir installé :  
+- **Node.js** *(Version 16+ recommandée)*  
+- **Angular CLI** *(Installation : `npm install -g @angular/cli`)*  
+
+### **2️⃣ Cloner le projet**  
+```bash
+git clone https://github.com/ton-repo/beyond-the-closet.git
+cd beyond-the-closet
+```  
+
+### **3️⃣ Installer les dépendances**  
+```bash
+npm install
+```  
+
+### **4️⃣ Lancer l’application**  
 ```bash
 ng serve
 ```
+**🔹 Ouvre l’URL** `http://localhost:4200/` dans ton navigateur.  
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## **🎮 Fonctionnalités principales**  
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### **👕 Sélection & Composition des tenues**  
+✔ **Choix des vêtements** (Hauts, Bas, Chaussures, Sacs...).  
+✔ **Affichage clair et organisé** des items sélectionnés.  
+✔ **Planification des tenues pour différents jours**.  
+✔ **Ajout/Suppression rapide d'éléments à la tenue**.  
 
-```bash
-ng generate component component-name
-```
+### **🖼️ Capture & Enregistrement des tenues**  
+✔ **Bouton "Sauvegarder"** qui capture l’image de la tenue via **html2canvas**.  
+✔ **Stockage sous forme d'image** pour consultation future.  
+✔ **Organisation par jour, événement ou occasion** *(ex : tenue de vacances du lundi...)*.  
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### **📱 Interface simple & intuitive**  
+✔ **Glisser-déposer pour organiser les éléments**.  
+✔ **Interface élégante avec icônes minimalistes**.  
+✔ **Aperçu clair pour faciliter la visualisation**.  
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## **🚀 Améliorations futures**  
+🔹 **Ajout d’un calendrier pour organiser ses tenues sur plusieurs jours**.  
+🔹 **Sauvegarde des looks dans une base de données pour un accès prolongé**.  
+🔹 **Suggestions automatiques d’outfits basées sur l’IA**.  
+🔹 **Possibilité de partager ses tenues sur les réseaux sociaux**.  
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+## **💡 Conclusion**  
+**Beyond The Closet** n’est pas juste une application de mode, c’est **un véritable outil d’organisation**. Plus besoin de **perdre du temps** à choisir quoi porter chaque jour : sélectionne, sauvegarde et profite pleinement de tes vacances ou événements sans stress.  
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+✨ **Simplifie ton quotidien en planifiant tes tenues à l’avance !** ✨  
