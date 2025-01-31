@@ -92,4 +92,4 @@ ng serve
 ## **💡 Conclusion**  
 **Beyond The Closet** n’est pas juste une application de mode, c’est **un véritable outil d’organisation**. Plus besoin de **perdre du temps** à choisir quoi porter chaque jour : sélectionne, sauvegarde et profite pleinement de tes vacances ou événements sans stress.  
 
-✨ **Simplifie ton quotidien en planifiant tes tenues à l’avance !** ✨  
+✨ **Simplifie ton quotidien en planifiant tes tenues à l’avance  !** ✨  
