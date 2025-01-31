@@ -1,3 +1,8 @@
+<div id="loading-screen" *ngIf="isLoading">
+  <div class="loader"></div>
+  <p>Chargement en cours...</p>
+</div>
+
 <div id="background-container"></div>
 <div id="model-container"></div>
 <div id="title-container">
@@ -6,13 +11,12 @@
       <span>The</span>
       <span>   Closet</span>
     </h1>
-  </div>
-  <div id="controls">
+</div>
+<div id="controls">
     <button [routerLink]="['/fitting-room', 'Tenue Glam']">
       Tenue Glam
     </button>
     <button [routerLink]="['/fitting-room', 'Tenue du jour']">
       Tenue du jour
     </button>
-  </div>
-  
+</div>

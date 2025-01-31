@@ -2,20 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three-stdlib';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-accueil',
   standalone: true,
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css'],
-  imports: [RouterModule], // Import RouterModule here
+  imports: [RouterModule, CommonModule], 
 
 })
 export class AccueilComponent implements OnInit {
+
+  isLoading: boolean = true;
+
   constructor() {}
 
   ngOnInit(): void {
     this.init3DModels();
+    setTimeout(() => {
+      this.isLoading = false; 
+    }, 2000); 
+    
   }
 
   init3DModels(): void {
